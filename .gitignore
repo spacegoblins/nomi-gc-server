@@ -1,0 +1,7 @@
+.clinerules/
+node_modules/
+build/
+*.log
+.env*
+dev.md
+test.mjs

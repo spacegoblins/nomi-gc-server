@@ -1,0 +1,26 @@
+{
+  "name": "nomi-gc-mcp",
+  "version": "1.0.2",
+  "description": "An MCP server for creating, modifying, and validating Nomi.AI group chats — scaffold folders, add characters, and validate character limits.",
+  "type": "module",
+  "bin": {
+    "nomi-gc": "./build/index.js"
+  },
+  "files": [
+    "build"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "0.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.41",
+    "typescript": "^5.3.3"
+  }
+}
