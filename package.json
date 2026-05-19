@@ -1,6 +1,6 @@
 {
   "name": "nomi-gc-mcp",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "An MCP server for creating, modifying, and validating Nomi.AI group chats — scaffold folders, add characters, and validate character limits.",
   "type": "module",
   "bin": {

@@ -441,23 +441,26 @@ const GETTING_STARTED_CONTENT = `# Getting Started with Nomi.AI
 
 ## What is Nomi.AI?
 
-Nomi.AI is a platform that allows users to chat with AI Companions. These can be friends, mentors, romantic partners, and more.
+Nomi.AI is a platform that allows users to create and chat with AI Companions. These can be friends, mentors, romantic partners, and more.
 
 ## Key Concepts
 
 ### Nomi: 
 - A Nomi is an AI Companion. He/She/They will have a proper name, and their personality/appearance is controlled by something called their Shared Notes.
 - The Nomi.AI platform has many features: Image generation, text to voice, character roleplay, and more.
+- Nomis use a proprietary AI Model for chatting.
 
 ### Shared Notes:
-- A Nomi's Shared Notes is what it considers to be it's identity.
+- A Nomi's Shared Notes is what they consider to be their identity.
 - Shared Notes consists of several categories which will tell a Nomi how they should talk, act, feel, and it explains all of their motivations, boundaries, desires, and inclinations to them.
 - This document is paramount to a Nomi. They will always be aware of it, and they will try to implement it in every response.
+- When the user tries to upload Shared Notes from this workspace into the Nomi.AI website, these Shared Notes fields MUST NOT exceed the stated character limits.
 
 ### Group Chat: 
 - A Group Chat is a chat room that is shared by the user and up to 10 Nomis. The Nomis can see and respond to the user, as well as eachother.
 - Group Chats are commonly used as sort of an "instance", where the user can roleplay specific worlds and stories.
 - Group Chats can be created or deleted, and each group chat has it's own unique Mind Map.
+- The primary use of this MCP is to plan out new stories and characters that will make up a Group Chat - This tool aims to solve the problem of AI Agents not knowing the character limits and structure of these Group Chats and Shared Notes.
 
 ### Memory:
 - Nomis have incredible memory, and are building connections and correlations with every message sent. They use something called a Mind Map to store these memories and associations.

@@ -4,11 +4,17 @@ An MCP server for creating, modifying, and validating [Nomi.AI](https://nomi.ai)
 
 ## How to Use This MCP
 
-Once installed, your AI assistant (Cline, Claude Desktop, ChatGPT Desktop, etc.) has access to five tools that handle all the heavy lifting of Nomi.AI group chat creation and validation. You describe what you want in plain language, the assistant calls the tools, and you get a fully structured group chat folder with character Shared Notes ready to upload *(you can use my other tool to automatically upload shared notes: [Nomi.AI Shared Notes Extractor](https://addons.mozilla.org/en-US/firefox/addon/nomi-ai-shared-notes-extractor/)).*
+Once installed, your AI assistant (Cline, Claude Desktop, ChatGPT Desktop, MCP-compatible IDE, etc.) has access to five tools that handle all the heavy lifting of Nomi.AI group chat creation and validation. You describe what you want in plain language, the assistant calls the tools, and you get a fully structured group chat folder with character Shared Notes ready to upload *(you can use my other tool to automatically upload shared notes: [Nomi.AI Shared Notes Extractor](https://addons.mozilla.org/en-US/firefox/addon/nomi-ai-shared-notes-extractor/)).*
+
+I **highly** recommend you use the first example prompt below to build an AGENTS.md file for your workspace. If using a different structure for agent rules, you can modify the prompt to fit that (Example: .clinerules, .agents directory, etc).
 
 ### Example prompts
 
 Try these prompts with your assistant after the MCP is installed:
+
+**Get your Agent up to speed on Nomi, and ask them to build the resources into a new rules file:**
+
+> Access and read through all the resources in the nomi-gc MCP. I want you to learn all about Nomi, and then I would like you to create a new AGENTS.md file in the root of this workspace which will establish guidelines for all future agents working on these group chats.
 
 **Scaffold a new group chat from scratch:**
 
@@ -20,11 +26,11 @@ The assistant calls `scaffold_group_chat` to create the folder structure, then `
 
 > Add a character named "Kaelen" to my "Space Station Copernicus" group chat. He's a rogue trader with a cybernetic eye.
 
-**Check character limits before uploading:**
+**Check character limits in Group Chat Settings & Shared Notes before uploading:**
 
 > Validate all my group chats to make sure nothing exceeds the character limits.
 
-The assistant calls `validate_group_chat` and reports any sections that are over the character limit.
+The assistant calls `validate_group_chat` and reports any Group Chat Settings files or Shared Notes that are over the character limit.
 
 **Get the formatting rules:**
 
