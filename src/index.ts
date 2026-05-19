@@ -14,6 +14,7 @@
  *   - nomi-gc://rules/overview
  *   - nomi-gc://rules/formatting
  *   - nomi-gc://rules/character-limits
+ *   - nomi-gc://guides/getting-started
  *   - nomi-gc://guides/ai-prompting
  */
 
@@ -101,15 +102,6 @@ function toDisplayName(kebab: string): string {
     .join(" ");
 }
 
-function formatDate(): string {
-  const d = new Date();
-  const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December",
-  ];
-  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
-}
-
 function readAllLines(filePath: string): string[] | null {
   if (!fs.existsSync(filePath)) return null;
   return fs.readFileSync(filePath, "utf-8").split("\n");
@@ -141,63 +133,6 @@ function resolveRoot(workingDirectory?: string): string {
 }
 
 // ─── Template Generators (ported from nomi-gc.mjs) ─────────────────────────
-
-function generateReadmeContent(groupName: string): string {
-  const displayName = toDisplayName(toKebabCase(groupName));
-
-  return `# ${displayName} — Group Chat Reference
-
-This file contains all formatting rules, character limits, and structural requirements for this Nomi.AI group chat. Refer to this file when adding or editing content in the group's files.
-
-## Settings (settings.md)
-
-| Section | Max Characters | Notes |
-|---------|---------------|-------|
-| Backstory | 1000 | Written in third person using proper nouns. Avoid pronouns to prevent ambiguity. |
-| Current Roleplay | 700 | Optional. Describes the immediate scene or objective. |
-
-## Mind Map (mind-map.md)
-
-The mind map organizes world lore using Nomi.AI mind map format.
-
-**Three categories only:**
-- **Lore**: People, places, and things from shared experiences
-- **Topics**: Themes and subjects discussed together
-- **Goals**: Aspirations for the relationship and future
-
-**Entry format:**
-- Title: \`# Mind Map: <Category>: <Name of thing>\`
-- Body: \`**Dossier: <name>**\`
-- Start with who/what/where/when/why/how information.
-
-## Shared Notes (*_Shared_Notes.md)
-
-Each character has a Shared Notes file with exactly these 10 sections in order:
-
-| Section | Max Characters |
-|---------|---------------|
-| BACKSTORY | 2000 |
-| INCLINATION | 150 |
-| CURRENT_ROLEPLAY | 700 |
-| YOUR_APPEARANCE | 200 |
-| NOMIS_APPEARANCE | 500 |
-| NICKNAMES | 250 |
-| PREFERENCES | 500 |
-| DESIRES | 500 |
-| BOUNDARIES | 500 |
-
-- Section headings use \`## SECTION_NAME\` format (exactly as shown above).
-- Character limits are strict. Do not exceed them.
-- Empty sections should display \`*(empty)*\` as their content.
-- Never alter the section structure or add/remove sections.
-
-## General Rules
-
-- Backstory is written in **third person** using **proper nouns**. Avoid pronouns to prevent ambiguity.
-- After making any changes, run \`validate_group_chat\` to catch over-limit sections early.
-- Always keep content within the specified character limits.
-`;
-}
 
 function generateSettingsContent(groupName: string): string {
   return `# ${toDisplayName(groupName)} — Group Chat Settings
@@ -502,6 +437,56 @@ const CHARACTER_LIMITS_CONTENT = JSON.stringify(
   2
 );
 
+const GETTING_STARTED_CONTENT = `# Getting Started with Nomi.AI
+
+## What is Nomi.AI?
+
+Nomi.AI is a platform that allows users to chat with AI Companions. These can be friends, mentors, romantic partners, and more.
+
+## Key Concepts
+
+### Nomi: 
+- A Nomi is an AI Companion. He/She/They will have a proper name, and their personality/appearance is controlled by something called their Shared Notes.
+- The Nomi.AI platform has many features: Image generation, text to voice, character roleplay, and more.
+
+### Shared Notes:
+- A Nomi's Shared Notes is what it considers to be it's identity.
+- Shared Notes consists of several categories which will tell a Nomi how they should talk, act, feel, and it explains all of their motivations, boundaries, desires, and inclinations to them.
+- This document is paramount to a Nomi. They will always be aware of it, and they will try to implement it in every response.
+
+### Group Chat: 
+- A Group Chat is a chat room that is shared by the user and up to 10 Nomis. The Nomis can see and respond to the user, as well as eachother.
+- Group Chats are commonly used as sort of an "instance", where the user can roleplay specific worlds and stories.
+- Group Chats can be created or deleted, and each group chat has it's own unique Mind Map.
+
+### Memory:
+- Nomis have incredible memory, and are building connections and correlations with every message sent. They use something called a Mind Map to store these memories and associations.
+
+### Mind Map:
+- A Mind Map is a collection of lore and information that a Nomi uses to represent their memory. A Group Chat has it's own unique Mind Map, which is separate from a Nomi's individual private Mind Map.
+- The Mind Map is where detailed concepts live. People, Places, Laws, Customs, and more that is unique to the Group Chat's roleplay scenario live here.
+- Think of the Mind Map as a place where complicated ideas and descriptions should live.
+
+## How Agents Should Use This MCP
+- This MCP contains two things that will help an Agent work with a user to create content for Nomi.AI: Structure and Formatting guidelines, as well as explanations of core concepts.
+- When helping the user do creative writing tasks, such as writing a new Group Chat, the agent should use the MCP's tools to validate the length of the output and to make sure they are operating within the limitations of the platform.
+
+### Example User Requests
+
+1:
+- User: Make a new group chat for me. I want it to be a cyberpunk roleplay, called Neon, with four interesting characters.
+- Agent: After creating a properly structured new group chat using the MCP tools, the agent should then initiate a creative writing task. They will generate content to fill the fields in the generated documents, using everything they know about Nomi to create a compelling roleplay scenario.
+
+2:
+- User: I have a Nomi Group Chat that I want you to format using the nomi-gc MCP. I'll paste the details here: (group chat backstory text), (group chat current roleplay). The characters are John, Lexi, and Howard.
+- Agent: The agent will call the MCP tools to generate a properly scaffolded new group chat folder, and then they will import the information provided and replace the blank text/template text. The end result is that the user can now modify and work on the group chat using their agent and the nomi-gc MCP.
+
+3:
+- User: Can you help me create a new character? Her name is Melissa, and she ... (character ideas)
+- Agent: You would start by generating a new _shared_notes.md file in the user's workspace, using the proper format, and then engage the user in a creative writing flow to get a sense of what they want the Nomi to be like. You would then take that information and use it to populate the new shared notes file.
+
+`;
+
 const AI_GUIDING_CONTENT = `# AI Prompting Guide for Nomi-GC
 
 ## Your Role
@@ -629,6 +614,16 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   switch (name) {
     case "get_formatting_rules": {
       log("INFO", "Formatting rules requested");
+
+      // Build tables from constants to keep a single source of truth
+      const settingsTable = Object.entries(SETTINGS_LIMITS)
+        .map(([section, limit]) => `| ${section.charAt(0) + section.slice(1).toLowerCase().replace(/_/g, " ")} | ${limit} |`)
+        .join("\n");
+
+      const notesTable = Object.entries(SHARED_NOTES_LIMITS)
+        .map(([section, limit]) => `| ${section} | ${limit} |`)
+        .join("\n");
+
       const markdown = `# Nomi.AI Group Chat Formatting Rules
 
 ## Section Character Limits
@@ -637,22 +632,13 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
 | Section | Max Characters |
 |---------|---------------|
-| Backstory | 1000 |
-| Current Roleplay | 700 |
+${settingsTable}
 
 ### Shared Notes (*_Shared_Notes.md)
 
 | Section | Max Characters |
 |---------|---------------|
-| BACKSTORY | 2000 |
-| INCLINATION | 150 |
-| CURRENT_ROLEPLAY | 700 |
-| YOUR_APPEARANCE | 200 |
-| NOMIS_APPEARANCE | 500 |
-| NICKNAMES | 250 |
-| PREFERENCES | 500 |
-| DESIRES | 500 |
-| BOUNDARIES | 500 |
+${notesTable}
 
 ## Settings Rules
 
@@ -669,7 +655,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
 ## Shared Notes Rules
 
-- Exactly 10 sections must be present in order: BACKSTORY, INCLINATION, CURRENT_ROLEPLAY, YOUR_APPEARANCE, NOMIS_APPEARANCE, NICKNAMES, PREFERENCES, DESIRES, BOUNDARIES.
+- Exactly 10 sections must be present in order: ${Object.keys(SHARED_NOTES_LIMITS).join(", ")}.
 - Section headings use \`## SECTION_NAME\` format.
 - Character limits are strict. Do not exceed them.
 - The exported-date and Nomi ID lines at the top can remain as template placeholders until imported.`;
@@ -769,7 +755,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
       fs.writeFileSync(path.join(groupPath, "settings.md"), generateSettingsContent(folderName));
       fs.writeFileSync(path.join(groupPath, "mind-map.md"), generateMindMapContent());
-      fs.writeFileSync(path.join(groupPath, "README.md"), generateReadmeContent(folderName));
 
       for (const charName of validCharNames) {
         const filename = toSharedNotesFilename(charName);
@@ -787,7 +772,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       }
       resultLines.push("");
       resultLines.push("### Files Created:");
-      resultLines.push(`- \`${folderName}/README.md\` — Group chat reference`);
       resultLines.push(`- \`${folderName}/settings.md\``);
       resultLines.push(`- \`${folderName}/mind-map.md\``);
       resultLines.push(`- \`${folderName}/characters/\``);
@@ -996,6 +980,12 @@ server.setRequestHandler(ListResourcesRequestSchema, async () => ({
       description: "The exact 10-section character limit table as structured JSON",
     },
     {
+      uri: "nomi-gc://guides/getting-started",
+      mimeType: "text/markdown",
+      name: "Getting Started with Nomi.AI",
+      description: "First stop for AI agents — learn what Nomi.AI is, how group chats work, and how to use this MCP effectively. Read this before creating or editing group chats.",
+    },
+    {
       uri: "nomi-gc://guides/ai-prompting",
       mimeType: "text/markdown",
       name: "AI Prompting Guide for Nomi-GC",
@@ -1016,6 +1006,9 @@ server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
       break;
     case "nomi-gc://rules/character-limits":
       text = CHARACTER_LIMITS_CONTENT;
+      break;
+    case "nomi-gc://guides/getting-started":
+      text = GETTING_STARTED_CONTENT;
       break;
     case "nomi-gc://guides/ai-prompting":
       text = AI_GUIDING_CONTENT;
