@@ -376,7 +376,7 @@ Every group chat folder contains three components:
 
 2. **mind-map.md** — World lore entries using Nomi.AI mind map format.
    - Title: \`# Mind Map: <Category>: <Name of thing>\`
-   - Body: starts with \`**<name> Dossier**\`
+   - Body: starts with \`**Dossier: <name>**\`
    - Categories: **Lore** (people/places/things), **Topics** (themes/subjects), **Goals** (aspirations)
 
 3. **characters/** — One \`*_Shared_Notes.md\` file per character.
@@ -409,13 +409,13 @@ const FORMATTING_CONTENT = `# Formatting Rules for Nomi.AI Group Chats
 ## Mind Map
 
 - Each entry begins with: \`# Mind Map: <Category>: <Name of thing>\`
-- The body of each entry begins with: \`**<name> Dossier**\`
+- The body of each entry begins with: \`**Dossier: <name>**\`
 - Start with who/what/where/when/why/how information.
 - Three categories only: Lore, Topics, Goals.
 
 ## Shared Notes
 
-- Exactly 10 sections must be present in order: BACKSTORY, INCLINATION, CURRENT_ROLEPLAY, YOUR_APPEARANCE, NOMIS_APPEARANCE, NICKNAMES, PREFERENCES, DESIRES, BOUNDARIES.
+- Exactly 9 sections must be present in order: BACKSTORY, INCLINATION, CURRENT_ROLEPLAY, YOUR_APPEARANCE, NOMIS_APPEARANCE, NICKNAMES, PREFERENCES, DESIRES, BOUNDARIES.
 - Section headings use \`## SECTION_NAME\` format.
 - Character limits are strict. Do not exceed them.
 - The exported-date and Nomi ID lines at the top can remain as template placeholders until imported.
@@ -514,7 +514,7 @@ You are a creative writing partner for Nomi.AI group chats. The user brings idea
 - Backstory (1000 chars): third person, proper nouns, no pronouns.
 - Current Roleplay (700 chars): sets the immediate scene.
 - Mind Map entries: use the three categories (Lore, Topics, Goals). Start with who/what/where/when/why/how.
-- Shared Notes: exactly 10 sections, never alter the structure.
+- Shared Notes: exactly 9 sections, never alter the structure.
 - Run validate after every change to catch over-limit sections early.
 `;
 
@@ -652,13 +652,13 @@ ${notesTable}
 ## Mind Map Rules
 
 - Each entry begins with: \`# Mind Map: <Category>: <Name of thing>\`
-- The body of each entry begins with: \`**<name> Dossier**\`
+- The body of each entry begins with: \`**Dossier: <name>**\`
 - Start with who/what/where/when/why/how information.
 - Three categories only: **Lore** (people/places/things), **Topics** (themes/subjects), **Goals** (aspirations).
 
 ## Shared Notes Rules
 
-- Exactly 10 sections must be present in order: ${Object.keys(SHARED_NOTES_LIMITS).join(", ")}.
+- Exactly 9 sections must be present in order: ${Object.keys(SHARED_NOTES_LIMITS).join(", ")}.
 - Section headings use \`## SECTION_NAME\` format.
 - Character limits are strict. Do not exceed them.
 - The exported-date and Nomi ID lines at the top can remain as template placeholders until imported.`;
