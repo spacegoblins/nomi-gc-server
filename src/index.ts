@@ -280,7 +280,7 @@ function validateSharedNotes(filePath: string, fileName: string): ValidationErro
   let currentContent: string[] = [];
 
   for (const line of lines) {
-    const headerMatch = line.match(/^##\s+(\w+)\s*$/);
+    const headerMatch = line.match(/^##\s+(.+?)\s*$/);
     if (headerMatch) {
       if (currentSection) {
         const text = currentContent.join(" ").trim();
@@ -294,7 +294,7 @@ function validateSharedNotes(filePath: string, fileName: string): ValidationErro
           });
         }
       }
-      currentSection = headerMatch[1].trim();
+      currentSection = headerMatch[1].trim().toUpperCase().replace(/\s+/g, "_").replace(/'/g, "");
       currentContent = [];
     } else if (currentSection) {
       if (!line.trim().startsWith("<!--") && !line.trim().startsWith(">") && line.trim() !== "") {
