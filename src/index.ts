@@ -208,10 +208,10 @@ function listGroupChatFolders(rootDir: string): string[] {
 function countCharactersInChat(rootDir: string, folderName: string): string[] {
   const charsDir = path.join(rootDir, folderName, "characters");
   if (!fs.existsSync(charsDir)) return [];
-  return fs
+      return fs
     .readdirSync(charsDir)
-    .filter((f) => f.endsWith("_Shared_Notes.md"))
-    .map((f) => f.replace("_Shared_Notes.md", "").replace(/_/g, " "));
+    .filter((f) => /_Shared_Notes(\.\d{2}-\d{2}-\d{4}-\d{4})?\.md$/.test(f))
+    .map((f) => f.replace(/_Shared_Notes.*\.md$/, "").replace(/_/g, " "));
 }
 
 // ─── Validation Functions (ported from nomi-gc.mjs) ────────────────────────
@@ -913,7 +913,7 @@ ${notesTable}
         // Validate characters
         const charsDir = path.join(groupPath, "characters");
         if (fs.existsSync(charsDir)) {
-          const charFiles = fs.readdirSync(charsDir).filter((f) => f.endsWith("_Shared_Notes.md"));
+          const charFiles = fs.readdirSync(charsDir).filter((f) => /_Shared_Notes(\.\d{2}-\d{2}-\d{4}-\d{4})?\.md$/.test(f));
           if (charFiles.length === 0) {
             resultLines.push(`- ⚠️ \`characters/\` — No character files found`);
           } else {
