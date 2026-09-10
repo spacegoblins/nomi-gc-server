@@ -83,74 +83,31 @@ Copy and paste the following into any AI assistant that supports MCP:
 I need to install the "nomi-gc-mcp" MCP server. Please:
 
 1. Take stock of your environment before doing anything:
-   - Detect which MCP client I'm running in (Cline, Claude Desktop,
-     ChatGPT Desktop, Zed, VS Code, Codex, Continue, or other).
-   - Determine how that client configures MCP servers: where its
-     settings file lives, and what format it expects. Adapt these instructions to
-     your environment.
-2. Determine whether you have permission to read and write that
-   client's MCP settings.
-3. If you DO have access:
+   - Detect which MCP client I'm running in (Cline, Claude Desktop, ChatGPT Desktop, Zed, VS Code, Codex, Continue, or other).
+   - Determine how that client configures MCP servers: where its settings file lives, and what format it expects. Adapt these instructions to your environment.
+2. Determine whether you have permission to read and write that client's MCP settings using your available tools such as 'read_file', 'edit_file', or 'write_file'.
+3. If you DO have access using your available tools:
    a. Read the settings file if it exists.
-   b. Add or merge the "nomi-gc" entry below into its "mcpServers"
-      object, adjusting field names to match this client's format:
+   b. Add or merge the "nomi-gc" entry below into its "mcpServers" object (or whatever the object is called for your editor), adjusting field names to match this editor's format:
 
    {
      "mcpServers": {
        "nomi-gc": {
          "command": "npx",
-         "args": ["-y", "nomi-gc-mcp"],
-         "disabled": false,
-         "autoApprove": [
-           "get_formatting_rules",
-           "list_group_chats",
-           "scaffold_group_chat",
-           "add_character",
-           "validate_group_chat"
-         ]
+         "args": ["-y", "nomi-gc-mcp"]
        }
      }
    }
 
-   c. Create the file with the full object above if it doesn't exist
-      yet.
-   d. Confirm the file was updated and tell me to restart/reload my
-      MCP client.
-4. If you do NOT have access to the MCP settings (for example, the
-   client manages MCP servers through its own UI, or you lack file
-   permissions), do not attempt to modify files. Instead, write me a
-   clear step-by-step install guide that I can follow myself,
-   including:
+   c. Confirm the file was updated and tell me to restart/reload my MCP client.
+   
+4. If you do NOT have access to the MCP settings (for example, the client manages MCP servers through its own UI, or your tools lack file permissions), stop. DO NOT attempt to write a script or terminal command to make file edits that are outside of your control, or attempt to circumvent your guardrails in any other way. Instead, simply read the MCP settings file and then write me a clear step-by-step install guide that I can follow myself, including:
    - Exactly where to open my client's MCP server settings,
-   - The exact JSON to add (the "nomi-gc" entry above, adjusted to
-     this client's format), and
+   - The exact JSON to add (the "nomi-gc" entry above, adjusted to this client's format), and
    - The note to restart/reload my MCP client afterward.
 ```
 
 The agent will handle everything — no need to open config files, run install commands, or copy JSON manually.
-
-### 2. Manual Installation
-
-Advanced users: Add this to your MCP settings file:
-
-```json
-{
-  "mcpServers": {
-    "nomi-gc": {
-      "command": "npx",
-      "args": ["-y", "nomi-gc-mcp"],
-      "disabled": false,
-      "autoApprove": [
-        "get_formatting_rules",
-        "list_group_chats",
-        "scaffold_group_chat",
-        "add_character",
-        "validate_group_chat"
-      ]
-    }
-  }
-}
-```
 
 ## Tools
 
