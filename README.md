@@ -77,48 +77,61 @@ Each `*_Shared_Notes.md` file contains the correct Nomi.AI section headers. Your
 
 ### 1. Ask an Agent to Install This MCP
 
-Copy and paste the following into your AI assistant (e.g. Cline, Claude Desktop, ChatGPT Desktop, or any AI assistant that supports MCP):
+Copy and paste the following into any AI assistant that supports MCP:
 
 ```
 I need to install the "nomi-gc-mcp" MCP server. Please:
 
-1. Detect which application I'm running in (Cline, Claude Desktop, ChatGPT Desktop, Continue, or other).
-2. Locate the correct MCP settings file for that client:
-   - Cline: %APPDATA%\Code\User\globalStorage\saoudrizwan.claude-dev\settings\cline_mcp_settings.json
-   - Claude Desktop: %APPDATA%\Claude\claude_desktop_config.json
-   - ChatGPT Desktop: %APPDATA%\ChatGPT\chatgpt_mcp_config.json
-   - Continue: .continuum.json in the project root
-3. Read the file if it exists.
-4. Add or merge the following entry into the "mcpServers" object:
+1. Take stock of your environment before doing anything:
+   - Detect which MCP client I'm running in (Cline, Claude Desktop,
+     ChatGPT Desktop, Zed, VS Code, Codex, Continue, or other).
+   - Determine how that client configures MCP servers: where its
+     settings file lives, and what format it expects. Adapt these instructions to
+     your environment.
+2. Determine whether you have permission to read and write that
+   client's MCP settings.
+3. If you DO have access:
+   a. Read the settings file if it exists.
+   b. Add or merge the "nomi-gc" entry below into its "mcpServers"
+      object, adjusting field names to match this client's format:
 
-{
-  "mcpServers": {
-    "nomi-gc": {
-      "command": "npx",
-      "args": ["-y", "nomi-gc-mcp"],
-      "disabled": false,
-      "autoApprove": [
-        "get_formatting_rules",
-        "list_group_chats",
-        "scaffold_group_chat",
-        "add_character",
-        "validate_group_chat"
-      ]
-    }
-  }
-}
+   {
+     "mcpServers": {
+       "nomi-gc": {
+         "command": "npx",
+         "args": ["-y", "nomi-gc-mcp"],
+         "disabled": false,
+         "autoApprove": [
+           "get_formatting_rules",
+           "list_group_chats",
+           "scaffold_group_chat",
+           "add_character",
+           "validate_group_chat"
+         ]
+       }
+     }
+   }
 
-5. Create the file with the full object if it doesn't exist yet.
-6. Tell me the file was updated and ask me to restart/reload my MCP client.
+   c. Create the file with the full object above if it doesn't exist
+      yet.
+   d. Confirm the file was updated and tell me to restart/reload my
+      MCP client.
+4. If you do NOT have access to the MCP settings (for example, the
+   client manages MCP servers through its own UI, or you lack file
+   permissions), do not attempt to modify files. Instead, write me a
+   clear step-by-step install guide that I can follow myself,
+   including:
+   - Exactly where to open my client's MCP server settings,
+   - The exact JSON to add (the "nomi-gc" entry above, adjusted to
+     this client's format), and
+   - The note to restart/reload my MCP client afterward.
 ```
 
 The agent will handle everything — no need to open config files, run install commands, or copy JSON manually.
 
 ### 2. Manual Installation
 
-#### npx (recommended — no install required)
-
-Add this to your MCP settings file:
+Advanced users: Add this to your MCP settings file:
 
 ```json
 {
@@ -138,32 +151,6 @@ Add this to your MCP settings file:
   }
 }
 ```
-
-`npx` automatically downloads and runs the latest version. No install command, no manual updates.
-
-#### Global install
-
-```bash
-npm install -g nomi-gc-mcp
-```
-
-Then configure your MCP client to run:
-
-```json
-{
-  "mcpServers": {
-    "nomi-gc": {
-      "command": "nomi-gc",
-      "disabled": false,
-      "autoApprove": ["get_formatting_rules", "list_group_chats", "scaffold_group_chat", "add_character", "validate_group_chat"]
-    }
-  }
-}
-```
-
-#### From source
-
-Clone [github.com/spacegoblins/nomi-gc-server](https://github.com/spacegoblins/nomi-gc-server), then run `npm install && npm run build` and point your MCP client to `build/index.js`.
 
 ## Tools
 
