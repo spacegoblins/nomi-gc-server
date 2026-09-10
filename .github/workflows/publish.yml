@@ -4,24 +4,46 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'package.json'
+
+permissions:
+  contents: read
+  id-token: write # Required for npm trusted publishing (OIDC)
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false # Never cache in release builds
 
-      - name: Update npm
-        run: npm install -g npm@latest
+      - name: Check if version is already published
+        id: version-check
+        run: |
+          LOCAL_VERSION=$(node -p "require('./package.json').version")
+          PUBLISHED_VERSION=$(npm view nomi-gc-mcp version 2>/dev/null || echo "none")
+          if [ "$LOCAL_VERSION" = "$PUBLISHED_VERSION" ]; then
+            echo "Version $LOCAL_VERSION is already on npm — skipping publish."
+            echo "should_publish=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Publishing nomi-gc-mcp@$LOCAL_VERSION"
+            echo "should_publish=true" >> "$GITHUB_OUTPUT"
+          fi
 
-      - run: npm ci
+      - name: Install dependencies
+        if: steps.version-check.outputs.should_publish == 'true'
+        run: npm ci
 
-      - run: npm publish --access public
+      - name: Build
+        if: steps.version-check.outputs.should_publish == 'true'
+        run: npm run build
+
+      - name: Publish to npm
+        if: steps.version-check.outputs.should_publish == 'true'
+        run: npm publish
